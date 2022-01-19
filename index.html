@@ -1,0 +1,110 @@
+<!-- Mohamad Badawa -->
+<!-- 
+    This small page will enable you to calculate the average and the media of the numbers.
+    I styled this website using TailwindCSS
+    it also has validations so that the user cannot enter any of the following values:
+    - a String
+    - a negative number
+
+    The page will also display the average and the media of the numbers entered by the user
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Calculate the average and the median </title>
+        <script src="https://cdn.tailwindcss.com"></script>
+	</head>
+	<body class="bg-gray-100 h-screen w-screen flex flex-col justify-center items-center">
+		<form class="flex flex-col bg-white shadow p-5 gap-3" id="math-form">
+            <label for="firstInput">Enter #1</label>
+            <input class="border border-gray-300 rounded p-3 focus:outline-none focus:border-gray-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
+            invalid:border-pink-500 invalid:text-pink-600
+            focus:invalid:border-pink-500 focus:invalid:ring-pink-500" type="text" id="firstInput"></input>
+            <label for="secondInput">Enter #2</label>
+            <input class="border border-gray-300 rounded p-3 focus:outline-none focus:border-gray-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
+            invalid:border-pink-500 invalid:text-pink-600
+            focus:invalid:border-pink-500 focus:invalid:ring-pink-500" type="text" id="secondInput"></input>
+            <label for="thirdInput">Enter #3</label>
+            <input class="border border-gray-300 rounded p-3 focus:outline-none focus:border-gray-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
+            invalid:border-pink-500 invalid:text-pink-600
+            focus:invalid:border-pink-500 focus:invalid:ring-pink-500" type="text" id="thirdInput"></input>
+            <input class="bg-green-600 text-white rounded cursor-pointer p-3" type="submit" value="Calculate"></input>
+            <p class="" id="average"></p>
+            <p id="median"></p>
+            <p class="text-red-500" id="error"></p>
+        </form>
+
+		<script>
+			const form = document.getElementById("math-form");
+            // This function will calculate the average of the three numbers
+            function calculateAverage() {
+                let firstInput = document.getElementById("firstInput").value;
+                let secondInput = document.getElementById("secondInput").value;
+                let thirdInput = document.getElementById("thirdInput").value;
+                let average = (parseInt(firstInput) + parseInt(secondInput) + parseInt(thirdInput)) / 3;
+                document.getElementById("average").innerHTML = "The average is: " + average;
+            }
+            // This function will calculate the median of the three numbers
+            function calculateMedian() {
+                let firstInput = document.getElementById("firstInput").value;
+                let secondInput = document.getElementById("secondInput").value;
+                let thirdInput = document.getElementById("thirdInput").value;
+                let median = 0;
+                if (firstInput > secondInput && firstInput > thirdInput) {
+                    if (secondInput > thirdInput) {
+                        median = secondInput;
+                    } else {
+                        median = thirdInput;
+                    }
+                } else if (secondInput > firstInput && secondInput > thirdInput) {
+                    if (firstInput > thirdInput) {
+                        median = firstInput;
+                    } else {
+                        median = thirdInput;
+                    }
+                } else if (thirdInput > firstInput && thirdInput > secondInput) {
+                    if (firstInput > secondInput) {
+                        median = firstInput;
+                    } else {
+                        median = secondInput;
+                    }
+                } else {
+                    median = (firstInput + secondInput + thirdInput) / 3;
+                }
+          
+                document.getElementById("median").innerHTML = "The median is: " + median;
+                document.getElementById("error").innerHTML = "";
+            }
+			form.addEventListener("submit", (event) => {
+				event.preventDefault();
+                let firstInput = document.getElementById("firstInput").value;
+                let secondInput = document.getElementById("secondInput").value;
+                let thirdInput = document.getElementById("thirdInput").value;
+                if (firstInput === "" || secondInput === "" || thirdInput === "") {
+                    document.getElementById("error").innerHTML = "Please enter all three numbers";
+                } 
+                else if (firstInput < 0 || secondInput < 0 || thirdInput < 0) {
+                    document.getElementById("error").innerHTML = "Please enter positive numbers";
+                }
+                // checks if the value is a string
+                else if (isNaN(firstInput) || isNaN(secondInput) || isNaN(thirdInput)) {
+                    document.getElementById("error").innerHTML = "Please enter numbers only";
+                }
+                // replaces all the spaces and asks the user to enter a valid number
+                else if (firstInput.replace(/\s/g, "") === "" || secondInput.replace(/\s/g, "") === "" || thirdInput.replace(/\s/g, "") === "") {
+                    document.getElementById("error").innerHTML = "Please enter numbers without spaces";
+                }
+                else {
+                    calculateAverage();
+                    calculateMedian();
+                }
+                // on every submit the form will delete the inner html in error
+            });
+		</script>
+	</body>
+</html>
