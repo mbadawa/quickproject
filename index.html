@@ -55,28 +55,13 @@
                 let secondInput = document.getElementById("secondInput").value;
                 let thirdInput = document.getElementById("thirdInput").value;
                 let median = 0;
-                if (firstInput > secondInput && firstInput > thirdInput) {
-                    if (secondInput > thirdInput) {
-                        median = secondInput;
-                    } else {
-                        median = thirdInput;
-                    }
-                } else if (secondInput > firstInput && secondInput > thirdInput) {
-                    if (firstInput > thirdInput) {
-                        median = firstInput;
-                    } else {
-                        median = thirdInput;
-                    }
-                } else if (thirdInput > firstInput && thirdInput > secondInput) {
-                    if (firstInput > secondInput) {
-                        median = firstInput;
-                    } else {
-                        median = secondInput;
-                    }
+                let numbers = [firstInput, secondInput, thirdInput];
+                numbers.sort(function(a, b){return a-b});
+                if (numbers.length % 2 === 0) {
+                    median = (parseInt(numbers[numbers.length / 2 - 1]) + parseInt(numbers[numbers.length / 2])) / 2;
                 } else {
-                    median = (firstInput + secondInput + thirdInput) / 3;
+                    median = parseInt(numbers[(numbers.length - 1) / 2]);
                 }
-          
                 document.getElementById("median").innerHTML = "The median is: " + median;
                 document.getElementById("error").innerHTML = "";
             }
